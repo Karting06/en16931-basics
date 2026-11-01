@@ -34,6 +34,7 @@ import com.helger.text.display.IHasDisplayText;
  */
 public final class EN16931DisplayTextTest
 {
+  private static final Locale DUTCH = Locale.forLanguageTag ("nl");
   private static final Locale SPANISH = Locale.forLanguageTag ("es");
 
   @Test
@@ -49,6 +50,7 @@ public final class EN16931DisplayTextTest
   {
     assertEquals ("Rechnung", EEN16931InvoiceTypeCodeRole.INVOICE.getDisplayText (Locale.GERMAN));
     assertEquals ("Gutschrift", EEN16931InvoiceTypeCodeRole.CREDIT_NOTE.getDisplayText (Locale.GERMAN));
+    assertEquals ("Creditnota", EEN16931InvoiceTypeCodeRole.CREDIT_NOTE.getDisplayText (DUTCH));
     assertEquals ("Credit Note", EEN16931InvoiceTypeCodeRole.CREDIT_NOTE.getDisplayText (Locale.ENGLISH));
     assertEquals ("Avoir", EEN16931InvoiceTypeCodeRole.CREDIT_NOTE.getDisplayText (Locale.FRENCH));
     assertEquals ("Nota de cr\u00e9dito", EEN16931InvoiceTypeCodeRole.CREDIT_NOTE.getDisplayText (SPANISH));
@@ -59,6 +61,7 @@ public final class EN16931DisplayTextTest
   {
     assertEquals ("Handelsrechnung", EEN16931InvoiceTypeCode._380.getDisplayText (Locale.GERMAN));
     assertEquals ("Gutschrift", EEN16931InvoiceTypeCode._381.getDisplayText (Locale.GERMANY));
+    assertEquals ("Handelsfactuur", EEN16931InvoiceTypeCode._380.getDisplayText (DUTCH));
     assertEquals ("Commercial invoice", EEN16931InvoiceTypeCode._380.getDisplayText (Locale.ENGLISH));
     assertEquals ("Facture commerciale", EEN16931InvoiceTypeCode._380.getDisplayText (Locale.FRENCH));
     assertEquals ("Facture commerciale", EEN16931InvoiceTypeCode._380.getDisplayText (Locale.CANADA_FRENCH));
@@ -66,6 +69,7 @@ public final class EN16931DisplayTextTest
     for (final EEN16931InvoiceTypeCode e : EEN16931InvoiceTypeCode.values ())
     {
       assertNotEquals (e.getID (), e.getDisplayName (), e.getDisplayText (Locale.GERMAN));
+      assertNotEquals (e.getID (), e.getDisplayName (), e.getDisplayText (DUTCH));
       assertNotEquals (e.getID (), e.getDisplayName (), e.getDisplayText (Locale.FRENCH));
       assertNotEquals (e.getID (), e.getDisplayName (), e.getDisplayText (SPANISH));
     }

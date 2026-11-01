@@ -125,7 +125,7 @@ helpers on top of them.
 
 Every enum with a name also offers `getDisplayText (Locale)`, which returns the name in the language of
 the locale and the English name if there is no translation (`getDisplayName ()` is always English).
-German, Spanish and French names exist for the VAT categories, the payment means, the invoice type codes and the invoice type role (Rechnung / Gutschrift); countries and currencies take the
+German, Spanish, Dutch and French names exist for the VAT categories, the payment means, the invoice type codes and the invoice type role (Rechnung / Gutschrift); countries and currencies take the
 names of the JDK; everything else is English only.
 
 Every one of them carries `getID()` — the code as spelled in the workbook — plus everything else the
@@ -197,7 +197,7 @@ mvn clean install
 v1.0.4 - work in progress
 * Added `EEN16931DutyTaxFeeTypeCode`, the code list UNTDID 5153 (D24A) of BT-177 and BT-193
 * Fixed `EEN16931DateFormatCode.YYWWD` (format `103`): the value has 5 digits as UNTDID 2379 defines, not 6, so values could not be parsed and writing produced a wrong value. Weeks are ISO 8601 weeks, day `1` is Monday, independent of the default locale
-* Spanish and French names for `EEN16931TaxCategoryCode`, `EEN16931PaymentMeansCode`, `EEN16931InvoiceTypeCode` and `EEN16931InvoiceTypeCodeRole`, wherever a German name already exists. They are kept in the resource files `properties/es.properties` and `properties/fr.properties` and resolved by the ph-text `DefaultTextResolver`
+* Spanish, Dutch and French names for `EEN16931TaxCategoryCode`, `EEN16931PaymentMeansCode`, `EEN16931InvoiceTypeCode` and `EEN16931InvoiceTypeCodeRole`, wherever a German name already exists. They are kept in the resource files `properties/es.properties`, `properties/fr.properties` and `properties/nl.properties` and resolved by the ph-text `DefaultTextResolver`
 
 v1.0.3 - 2026-10-26
 * `EEN16931VATEXCode.getFromIDOrNull` and `containsID` ignore the case of the code, like the validation artefacts do: rule BR-CL-22 of the CEN Schematron compares `upper-case(.)` and the Peppol rules PEPPOL-EN16931-P0104 and following compare `upper-case(cbc:TaxExemptionReasonCode)`.
