@@ -39,7 +39,8 @@ import com.helger.collection.commons.ICommonsSet;
  * <p>
  * The counts asserted below are the row counts of the respective sheet of the workbook named in
  * {@link EN16931CodeLists#CODE_LIST_VERSION}. If one of them changes, a new version of the workbook
- * was transcribed and {@link EN16931CodeLists#CODE_LIST_VERSION} has to change with it.
+ * was transcribed and {@link EN16931CodeLists#CODE_LIST_VERSION} has to change with it. The one
+ * exception is {@link EEN16931DutyTaxFeeTypeCode}, which is not part of the workbook.
  *
  * @author Philip Helger
  */
@@ -93,6 +94,7 @@ public final class EN16931CodeListEnumsTest
     _assertCodeList (19, EEN16931AllowanceReasonCode.values (), EEN16931AllowanceReasonCode::getFromIDOrNull);
     _assertCodeList (185, EEN16931ItemTypeCode.values (), EEN16931ItemTypeCode::getFromIDOrNull);
     _assertCodeList (178, EEN16931ChargeReasonCode.values (), EEN16931ChargeReasonCode::getFromIDOrNull);
+    _assertCodeList (56, EEN16931DutyTaxFeeTypeCode.values (), EEN16931DutyTaxFeeTypeCode::getFromIDOrNull);
     _assertCodeList (6, EEN16931MimeCode.values (), EEN16931MimeCode::getFromIDOrNull);
     _assertCodeList (103, EEN16931EASCode.values (), EEN16931EASCode::getFromIDOrNull);
     _assertCodeList (106, EEN16931VATEXCode.values (), EEN16931VATEXCode::getFromIDOrNull);

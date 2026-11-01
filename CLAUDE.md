@@ -55,7 +55,7 @@ com.helger.en16931.basics
 
 com.helger.en16931.basics.codelist
   EN16931CodeLists       the classifying helpers on top of the enums, and the workbook version
-  EEN16931...Code        one enum per sheet of the code list workbook
+  EEN16931...Code        one enum per sheet of the code list workbook, plus UNTDID 5153
 ```
 
 ### Why the edition cannot be detected from the namespaces
@@ -101,7 +101,14 @@ value is written down twice.
 `EEN16931DateFormatCode` is **not** part of the workbook and therefore lives outside the `codelist`
 package. It holds the UNTDID 2379 qualifiers of the CII `format` attribute - EN 16931 only ever
 writes `102`, and since the 2026 edition `208` for BT-166 - together with the matching Java
-patterns. UBL needs no counterpart, because it uses the XML Schema date types.
+patterns. UBL needs no counterpart, because it uses the XML Schema date types. `YYWWD` (`103`) has 5
+digits, ISO 8601 weeks and day 1 for Monday; its formatter names the fields explicitly, because the
+pattern letters of a week based pattern follow the locale, so its Java pattern is only informative.
+
+`EEN16931DutyTaxFeeTypeCode` (UNTDID 5153, directory D24A) is **not** part of the workbook either,
+but it is a code list of BT-177 and BT-193 and lives in the `codelist` package. It tells BT-193 from
+BT-145 where BT-193-1 is omitted. Its count in `EN16931CodeListEnumsTest` is no row count, so a
+workbook update does not touch it.
 
 Two tests make a workbook update safe: `EN16931CodeListEnumsTest` asserts the row count of every
 sheet, that no code is duplicated and that every code can be looked up again;

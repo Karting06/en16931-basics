@@ -119,6 +119,7 @@ helpers on top of them.
 | BT-98, BT-140 | UNTDID 5189 Allowance codes | `EEN16931AllowanceReasonCode` |
 | BT-105, BT-145 | UNTDID 7161 Charge codes | `EEN16931ChargeReasonCode` |
 | BT-121 | CEF VATEX VAT exemption reason code | `EEN16931VATEXCode` |
+| BT-177, BT-193 | UNTDID 5153 Duty or tax or fee type name (D24A), not part of the workbook | `EEN16931DutyTaxFeeTypeCode` |
 | BT-125-1 | Mime codes | `EEN16931MimeCode` |
 | BT-158-1 | UNTDID 7143 Item type identification code | `EEN16931ItemTypeCode` |
 
@@ -194,6 +195,7 @@ mvn clean install
 # News and noteworthy
 
 v1.0.4 - work in progress
+* Added `EEN16931DutyTaxFeeTypeCode`, the code list UNTDID 5153 (D24A) of BT-177 and BT-193
 * Fixed `EEN16931DateFormatCode.YYWWD` (format `103`): the value has 5 digits as UNTDID 2379 defines, not 6, so values could not be parsed and writing produced a wrong value. Weeks are ISO 8601 weeks, day `1` is Monday, independent of the default locale
 * Spanish and French names for `EEN16931TaxCategoryCode`, `EEN16931PaymentMeansCode`, `EEN16931InvoiceTypeCode` and `EEN16931InvoiceTypeCodeRole`, wherever a German name already exists. They are kept in the resource files `properties/es.properties` and `properties/fr.properties` and resolved by the ph-text `DefaultTextResolver`
 
