@@ -194,6 +194,7 @@ mvn clean install
 # News and noteworthy
 
 v1.0.4 - work in progress
+* Fixed `EEN16931DateFormatCode.YYWWD` (format `103`): the value has 5 digits as UNTDID 2379 defines, not 6, so values could not be parsed and writing produced a wrong value. Weeks are ISO 8601 weeks, day `1` is Monday, independent of the default locale
 * Spanish and French names for `EEN16931TaxCategoryCode`, `EEN16931PaymentMeansCode`, `EEN16931InvoiceTypeCode` and `EEN16931InvoiceTypeCodeRole`, wherever a German name already exists. They are kept in the resource files `properties/es.properties` and `properties/fr.properties` and resolved by the ph-text `DefaultTextResolver`
 
 v1.0.3 - 2026-10-26

@@ -26,6 +26,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Locale;
 
 import org.junit.Test;
 
@@ -101,6 +102,48 @@ public final class EEN16931DateFormatCodeTest
   }
 
   @Test
+  public void testWeekDate ()
+  {
+    final EEN16931DateFormatCode e = EEN16931DateFormatCode.YYWWD;
+
+    // A Friday in ISO week 20
+    final LocalDate aDate = PDTFactory.createLocalDate (2026, Month.MAY, 15);
+    assertEquals ("26205", e.getAsString (aDate));
+    assertEquals (aDate, e.parseLocalDate ("26205"));
+
+    // Day 1 is the Monday
+    assertEquals (PDTFactory.createLocalDate (2026, Month.MAY, 11), e.parseLocalDate ("26201"));
+
+    // The week belongs to the week based year, not to the calendar year
+    assertEquals (PDTFactory.createLocalDate (2027, Month.JANUARY, 1), e.parseLocalDate ("26535"));
+    assertEquals ("26535", e.getAsString (PDTFactory.createLocalDate (2027, Month.JANUARY, 1)));
+    assertEquals (PDTFactory.createLocalDate (2025, Month.DECEMBER, 29), e.parseLocalDate ("26011"));
+
+    assertNull (e.parseLocalDate ("262005"));
+    assertNull (e.parseLocalDate ("26208"));
+    assertNull (e.parseLocalDate ("26545"));
+  }
+
+  @Test
+  public void testWeekDateDoesNotDependOnTheLocale ()
+  {
+    final Locale aDefault = Locale.getDefault ();
+    try
+    {
+      for (final Locale aLocale : new Locale [] { Locale.US, Locale.GERMANY, Locale.ROOT })
+      {
+        Locale.setDefault (aLocale);
+        assertEquals (PDTFactory.createLocalDate (2026, Month.MAY, 15),
+                      EEN16931DateFormatCode.YYWWD.parseLocalDate ("26205"));
+      }
+    }
+    finally
+    {
+      Locale.setDefault (aDefault);
+    }
+  }
+
+  @Test
   public void testParseDateTime ()
   {
     final XMLOffsetDateTime aDateTime = EEN16931DateFormatCode.CCYYMMDDHHMMSSZHHMM.parseDateTime ("20260515102030+0200");
@@ -145,11 +188,7 @@ public final class EEN16931DateFormatCodeTest
       else
       {
         assertNotNull ("No value for " + e.getID (), sValue);
-        // YYWWD is week based and cannot be resolved back to a date
-        if (e == EEN16931DateFormatCode.YYWWD)
-          assertFalse (sValue.isEmpty ());
-        else
-          assertEquals ("Round trip failed for " + e.getID (), aDate, e.parseLocalDate (sValue));
+        assertEquals ("Round trip failed for " + e.getID (), aDate, e.parseLocalDate (sValue));
       }
     }
   }

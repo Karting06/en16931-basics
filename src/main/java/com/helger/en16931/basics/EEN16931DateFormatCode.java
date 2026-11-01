@@ -19,6 +19,10 @@ package com.helger.en16931.basics;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
+import java.time.temporal.IsoFields;
+import java.util.Locale;
 
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -58,8 +62,11 @@ public enum EEN16931DateFormatCode implements IHasID <String>
   YYMMDD ("101", "uuMMdd", false),
   /** CCYYMMDD - full year, month, day. The only date format EN 16931 writes. */
   CCYYMMDD ("102", "uuuuMMdd", false),
-  /** YYWWD - year of the century, week, day of the week */
-  YYWWD ("103", "YYwwee", false),
+  /**
+   * YYWWD - year of the century, ISO 8601 week, day of the week with 1 for Monday. Unlike the Java
+   * pattern, the formatter of this format does not depend on the locale.
+   */
+  YYWWD ("103", "YYwwe", _createWeekDateFormatter (), false),
   /** YYDDD - year of the century, day of the year */
   YYDDD ("105", "uuDDD", false),
   /** CCYYMMDDHHMMSSZHHMM - full year, month, day, time and UTC offset */
@@ -80,10 +87,32 @@ public enum EEN16931DateFormatCode implements IHasID <String>
                           @NonNull @Nonempty final String sJavaPattern,
                           final boolean bHasTime)
   {
+    this (sID, sJavaPattern, DateTimeFormatter.ofPattern (sJavaPattern), bHasTime);
+  }
+
+  EEN16931DateFormatCode (@NonNull @Nonempty final String sID,
+                          @NonNull @Nonempty final String sJavaPattern,
+                          @NonNull final DateTimeFormatter aFormatter,
+                          final boolean bHasTime)
+  {
     m_sID = sID;
     m_sJavaPattern = sJavaPattern;
     m_bHasTime = bHasTime;
-    m_aFormatter = DateTimeFormatter.ofPattern (sJavaPattern);
+    m_aFormatter = aFormatter;
+  }
+
+  /**
+   * The letters of a week based {@link DateTimeFormatter} pattern follow the locale: the first day
+   * of the week and the first week of the year differ between countries. UNTDID 2379 fixes both, so
+   * the fields are named explicitly.
+   */
+  @NonNull
+  private static DateTimeFormatter _createWeekDateFormatter ()
+  {
+    return new DateTimeFormatterBuilder ().appendValueReduced (IsoFields.WEEK_BASED_YEAR, 2, 2, 2000)
+                                          .appendValue (IsoFields.WEEK_OF_WEEK_BASED_YEAR, 2)
+                                          .appendValue (ChronoField.DAY_OF_WEEK, 1)
+                                          .toFormatter (Locale.ROOT);
   }
 
   /**
@@ -99,7 +128,8 @@ public enum EEN16931DateFormatCode implements IHasID <String>
 
   /**
    * @return The {@link DateTimeFormatter} pattern matching this qualifier, e.g.
-   *         <code>uuuuMMdd</code>. Neither <code>null</code> nor empty.
+   *         <code>uuuuMMdd</code>. The pattern of {@link #YYWWD} is only informative, because its
+   *         letters depend on the locale. Neither <code>null</code> nor empty.
    */
   @NonNull
   @Nonempty
