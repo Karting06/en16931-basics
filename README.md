@@ -194,10 +194,12 @@ mvn clean install
 
 # News and noteworthy
 
-v1.0.4 - work in progress
+v1.0.4 - 2026-11-03
 * Added `EEN16931DutyTaxFeeTypeCode`, the code list UNTDID 5153 (D24A) of BT-177 and BT-193
-* Fixed `EEN16931DateFormatCode.YYWWD` (format `103`): the value has 5 digits as UNTDID 2379 defines, not 6, so values could not be parsed and writing produced a wrong value. Weeks are ISO 8601 weeks, day `1` is Monday, independent of the default locale
-* Spanish and French names for `EEN16931TaxCategoryCode`, `EEN16931PaymentMeansCode`, `EEN16931InvoiceTypeCode` and `EEN16931InvoiceTypeCodeRole`, wherever a German name already exists. They are kept in the resource files `properties/es.properties` and `properties/fr.properties` and resolved by the ph-text `DefaultTextResolver`
+* Fixed `EEN16931DateFormatCode.YYWWD` (format `103`): the value has 5 digits as UNTDID 2379 defines, not 6, so values could not be parsed and writing produced a wrong value.
+  Weeks are ISO 8601 weeks, day `1` is Monday, independent of the default locale
+* Spanish and French names for `EEN16931TaxCategoryCode`, `EEN16931PaymentMeansCode`, `EEN16931InvoiceTypeCode` and `EEN16931InvoiceTypeCodeRole`, wherever a German name already exists.
+  They are kept in the resource files `properties/es.properties` and `properties/fr.properties` and resolved by the ph-text `DefaultTextResolver`
 
 v1.0.3 - 2026-10-26
 * `EEN16931VATEXCode.getFromIDOrNull` and `containsID` ignore the case of the code, like the validation artefacts do: rule BR-CL-22 of the CEN Schematron compares `upper-case(.)` and the Peppol rules PEPPOL-EN16931-P0104 and following compare `upper-case(cbc:TaxExemptionReasonCode)`.
@@ -228,8 +230,9 @@ v1.0.0 - 2026-09-05
 * Contains `SpecificationIdentifierReader`, which reads BT-24 via SAX and stops the parser as soon
   as the value is known, instead of building a DOM tree of the whole document
 * Contains one enum per code list of the EN 16931 code list workbook `v17b`, from
-  `EEN16931AllowanceReasonCode` to `EEN16931VATEXCode`. `EN16931CodeLists` derives its BT-3 sets and
-  its BT-8 mappings from them. The unit codes of BT-130 and BT-150 are the one exception — 2162
+  `EEN16931AllowanceReasonCode` to `EEN16931VATEXCode`.
+  `EN16931CodeLists` derives its BT-3 sets and its BT-8 mappings from them.
+  The unit codes of BT-130 and BT-150 are the one exception — 2162
   codes do not fit into a Java enum.
 * Contains `EEN16931DateFormatCode` with the UNTDID 2379 date format qualifiers the CII syntax
   binding uses, and the parsing and writing that goes with them
