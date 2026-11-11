@@ -74,8 +74,8 @@ public final class EN16931DisplayTextTest
   @Test
   public void testSpanishAndFrenchNames ()
   {
-    assertEquals ("Tipo est\u00e1ndar", EEN16931TaxCategoryCode.S.getDisplayText (SPANISH));
-    assertEquals ("Tipo est\u00e1ndar", EEN16931TaxCategoryCode.S.getDisplayText (Locale.forLanguageTag ("es-ES")));
+    assertEquals ("Tipo general", EEN16931TaxCategoryCode.S.getDisplayText (SPANISH));
+    assertEquals ("Tipo general", EEN16931TaxCategoryCode.S.getDisplayText (Locale.forLanguageTag ("es-ES")));
     assertEquals ("Taux normal", EEN16931TaxCategoryCode.S.getDisplayText (Locale.FRENCH));
     assertEquals ("Taux normal", EEN16931TaxCategoryCode.S.getDisplayText (Locale.FRANCE));
     assertEquals ("Transferencia SEPA", EEN16931PaymentMeansCode._58.getDisplayText (SPANISH));
